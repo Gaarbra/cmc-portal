@@ -4,18 +4,26 @@
 
 @layer base {
   html { -webkit-tap-highlight-color: transparent; }
-  body { @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100; }
-  :focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950; }
+  body { @apply bg-paper text-stone-900 antialiased dark:bg-paper-dark dark:text-stone-100; }
+  h1, h2, h3 { font-feature-settings: 'lnum' 1, 'kern' 1; }
+  :focus-visible { @apply outline-none ring-2 ring-brand-600 ring-offset-2 ring-offset-paper dark:ring-offset-paper-dark; }
 }
 
 @layer components {
-  .card { @apply rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900; }
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50; }
+  /* A printed page, not a floating tile: hairline border, no shadow. */
+  .card { @apply rounded-sm border border-stone-300/80 bg-paper-card dark:border-stone-700/70 dark:bg-paper-dark-card; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2.5 text-sm font-semibold tracking-wide transition disabled:opacity-50; }
   .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800; }
-  .btn-ghost { @apply btn text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800; }
-  .input { @apply w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm placeholder:text-zinc-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-900; }
-  .chip { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium; }
-  .muted { @apply text-zinc-500 dark:text-zinc-400; }
+  .btn-ghost { @apply btn text-stone-700 hover:bg-stone-200/60 dark:text-stone-300 dark:hover:bg-stone-800; }
+  .btn-outline { @apply btn border border-brand-600 text-brand-700 hover:bg-brand-50 dark:border-brand-400 dark:text-brand-300 dark:hover:bg-brand-950; }
+  .input { @apply w-full rounded-sm border border-stone-300 bg-paper-card px-3.5 py-2.5 text-sm placeholder:text-stone-400 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/15 dark:border-stone-700 dark:bg-paper-dark-card; }
+  .chip { @apply inline-flex items-center rounded-sm px-2 py-0.5 text-xs font-semibold; }
+  .muted { @apply text-stone-500 dark:text-stone-400; }
+  /* Small-caps label, the way a printed program or catalogue sets headings. */
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-gold-700 dark:text-gold-400; }
+  .rule { @apply border-t border-stone-300 dark:border-stone-700; }
+  .rule-double { border-top: 3px double; @apply border-stone-400 dark:border-stone-600; }
+  .numeral { @apply font-serif; font-feature-settings: 'lnum' 1, 'tnum' 1; }
 }
 
 .pb-safe { padding-bottom: env(safe-area-inset-bottom); }

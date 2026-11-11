@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { ArrowLeft, Download, FileText, Mail, MapPin } from 'lucide-react';
 import { api } from '@/api';
 import { useAsync } from '@/lib/useAsync';
-import { Card, Empty, ErrorState, Loading } from '@/components/ui';
+import { Card, Empty, ErrorState, Loading, OfficialLinkButton } from '@/components/ui';
 import { courseColor, daysUntil, meetingLabel, relativeDay, shortDate, dueLabel } from '@/lib/format';
 
 export default function CourseDetail() {
@@ -20,18 +20,19 @@ export default function CourseDetail() {
 
   return (
     <div className="space-y-6">
-      <Link to="/courses" className="muted inline-flex items-center gap-1 text-sm hover:text-zinc-900 dark:hover:text-zinc-100">
+      <Link to="/courses" className="muted inline-flex items-center gap-1 text-sm hover:text-stone-900 dark:hover:text-stone-100">
         <ArrowLeft className="h-4 w-4" /> All courses
       </Link>
+      <div className="float-right -mt-10"><OfficialLinkButton k="courses" label="Course page on portal" /></div>
 
       <div className="card overflow-hidden">
         <div className={clsx('h-2', courseColor(c.color).dot)} />
         <div className="p-6">
-          <div className={clsx('text-xs font-bold uppercase tracking-wide', courseColor(c.color).text)}>
+          <div className={clsx('text-[11px] font-semibold uppercase tracking-[0.14em]', courseColor(c.color).text)}>
             {c.code}-{c.section} · {c.campus} · {c.term}
           </div>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight">{c.title}</h1>
-          {c.description && <p className="muted mt-2 max-w-2xl text-sm">{c.description}</p>}
+          <h1 className="mt-1 font-serif text-3xl font-medium sm:text-4xl">{c.title}</h1>
+          {c.description && <p className="mt-3 max-w-2xl font-serif text-lg leading-relaxed text-stone-700 dark:text-stone-300">{c.description}</p>}
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a href={`mailto:${c.instructor.email}`} className="inline-flex items-center gap-1.5 hover:underline">
               <Mail className="h-4 w-4" /> {c.instructor.name}
@@ -51,7 +52,7 @@ export default function CourseDetail() {
             {assignments.length === 0 ? (
               <Empty>No coursework posted.</Empty>
             ) : (
-              <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <ul className="divide-y divide-stone-100 dark:divide-stone-800">
                 {assignments.map((a) => {
                   const d = daysUntil(a.due);
                   const done = a.score != null;
@@ -103,7 +104,7 @@ export default function CourseDetail() {
             <ul className="space-y-1">
               {c.handouts!.map((f) => (
                 <li key={f.id}>
-                  <button className="-mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg p-2 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                  <button className="-mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-sm p-2 text-left hover:bg-stone-50 dark:hover:bg-stone-800/50">
                     <FileText className="h-5 w-5 shrink-0 text-brand-600 dark:text-brand-400" />
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-sm font-medium">{f.name}</div>

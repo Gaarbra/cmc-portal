@@ -5,6 +5,9 @@ import { api } from '@/api';
 import { useAsync } from '@/lib/useAsync';
 import { Card, ErrorState, Loading, PageHeader, Stat, Tabs } from '@/components/ui';
 import { money, shortDate, dueLabel } from '@/lib/format';
+import { officialUrl } from '@/lib/links';
+
+const whole = (n: number) => money(Math.round(n)).replace(/\.00$/, '');
 
 export default function Finances() {
   const { data, loading, error } = useAsync(() => api.getFinances());
@@ -18,28 +21,29 @@ export default function Finances() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Finances" subtitle="Student account, payments, and financial aid." />
+      <PageHeader eyebrow="Office of Student Accounts" title="Student Account" subtitle="Charges, payments, and financial aid." official="finances" />
 
-      <div className="card relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-800 p-6 text-white">
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
+      <div className="relative overflow-hidden rounded-sm bg-brand-700 p-6 text-white sm:p-8">
+        <div className="pointer-events-none absolute inset-2 border border-gold-500/40" />
         <div className="relative flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="text-sm text-brand-100">Current balance</div>
-            <div className="mt-1 text-4xl font-bold tabular-nums">{money(data.balance)}</div>
-            <div className="mt-1 text-sm text-brand-100">
-              Due {shortDate(data.dueDate)} ({dueLabel(data.dueDate)})
+            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gold-300">Current balance</div>
+            <div className="numeral mt-1 text-5xl font-medium">{money(data.balance)}</div>
+            <div className="mt-1 font-serif text-base italic text-brand-100">
+              Due {shortDate(data.dueDate)}
+              {dueLabel(data.dueDate) !== shortDate(data.dueDate) && ` (${dueLabel(data.dueDate)})`}
             </div>
           </div>
-          <button className="btn bg-white text-brand-700 hover:bg-brand-50">
+          <a href={officialUrl('finances')} target="_blank" rel="noopener noreferrer" className="btn bg-paper-card text-brand-700 hover:bg-white">
             <CreditCard className="h-4 w-4" /> Make a payment
-          </button>
+          </a>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 sm:gap-4">
-        <Stat label="Charges" value={money(charges).replace('.00', '')} />
-        <Stat label="Payments & aid" value={money(credits).replace('.00', '')} />
-        <Stat label="Aid this year" value={money(aidTotal).replace('.00', '')} />
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+        <Stat label="Charges" value={whole(charges)} />
+        <Stat label="Payments & aid" value={whole(credits)} />
+        <Stat label="Aid this year" value={whole(aidTotal)} />
       </div>
 
       <Tabs
@@ -53,7 +57,7 @@ export default function Finances() {
 
       {tab === 'activity' ? (
         <Card>
-          <ul className="-my-2 divide-y divide-zinc-100 dark:divide-zinc-800">
+          <ul className="-my-2 divide-y divide-stone-100 dark:divide-stone-800">
             {data.transactions.map((t) => (
               <li key={t.id} className="flex items-center justify-between gap-3 py-3">
                 <div className="min-w-0">
@@ -82,7 +86,7 @@ export default function Finances() {
                   <th className="px-5 py-3 text-right font-medium">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {data.aid.map((a) => (
                   <tr key={a.id}>
                     <td className="px-5 py-3">
@@ -99,7 +103,7 @@ export default function Finances() {
                             ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
                             : a.status === 'Pending'
                               ? 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
-                              : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800',
+                              : 'bg-stone-100 text-stone-600 dark:bg-stone-800',
                         )}
                       >
                         {a.status}

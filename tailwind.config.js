@@ -5,16 +5,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // CMC-inspired palette: cardinal red + gold
+        // Claremont McKenna cardinal + gold
         brand: {
-          50: '#fdf2f3', 100: '#fbe3e5', 200: '#f6c6cb', 300: '#ee9aa3',
-          400: '#e2626f', 500: '#cf3747', 600: '#a91d32', 700: '#8c1529',
-          800: '#741526', 900: '#621625', 950: '#36070f',
+          50: '#fbf3f4', 100: '#f5e1e4', 200: '#e9bfc6', 300: '#d68f9b',
+          400: '#c0606f', 500: '#a8384a', 600: '#981a31', 700: '#7e1529',
+          800: '#661322', 900: '#4f101b', 950: '#2b070d',
         },
-        gold: { 400: '#e9c46a', 500: '#d4a72c', 600: '#b38a1b' },
+        gold: { 300: '#e4d29b', 400: '#d6bc6e', 500: '#c4a24c', 600: '#a6863a', 700: '#7f6629' },
+        paper: { DEFAULT: '#f7f3ea', card: '#fffdf8', dark: '#14110e', 'dark-card': '#1c1814' },
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"EB Garamond"', 'Garamond', 'Georgia', 'serif'],
+        sans: ['"Source Sans 3"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

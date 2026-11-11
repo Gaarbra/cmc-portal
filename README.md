@@ -18,6 +18,13 @@ registration and your student account a tap away instead of buried in portlets.
 | **Finances** | Balance, account activity, financial aid awards |
 | **Profile** | Student info, advisor, holds |
 
+The design is meant to feel like the College, not a tech startup: EB Garamond
+serif headings, an ivory "paper" background, CMC cardinal and gold, hairline
+printed rules, and small-caps labels like a course catalogue.
+
+Every page has an **Official portal** link to its counterpart on the real site
+(all URLs live in `src/lib/links.ts`).
+
 Also: dark mode, sidebar on desktop / tab bar on phones, and it's an installable
 **PWA** — on iPhone open it in Safari → Share → *Add to Home Screen* and it runs
 like a native app.
@@ -30,7 +37,9 @@ npm run dev        # http://localhost:5173
 npm run build      # production build in dist/
 ```
 
-Sign in with any username — it currently runs in **demo mode** on sample data.
+It currently runs in **preview mode** on sample data (no password is asked for).
+
+Deploying to Namecheap: see [DEPLOY.md](DEPLOY.md).
 
 ## Architecture
 
@@ -44,6 +53,7 @@ src/
   pages/          # one file per screen
   components/     # Layout (nav) and shared UI
   lib/            # auth, theme, formatting, GPA math
+    links.ts      # every link to the official portal, in one place
 ```
 
 The UI only ever talks to the `PortalApi` interface, so connecting real data

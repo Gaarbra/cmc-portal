@@ -21,7 +21,9 @@ export default function Schedule() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Weekly Timetable"
         title="Schedule"
+        official="schedule"
         subtitle={`${courses[0]?.term ?? ''} · ${courses.length} courses`}
         action={
           <Tabs
@@ -53,7 +55,7 @@ function WeekGrid({ courses }: { courses: Course[] }) {
       <div className="grid min-w-[640px] grid-cols-[3.5rem_repeat(5,1fr)]">
         <div />
         {DAYS.map((d) => (
-          <div key={d} className={clsx('border-b border-zinc-100 py-3 text-center text-sm font-semibold dark:border-zinc-800', d === today && 'text-brand-600 dark:text-brand-400')}>
+          <div key={d} className={clsx('border-b border-stone-100 py-3 text-center text-sm font-semibold dark:border-stone-800', d === today && 'text-brand-600 dark:text-brand-400')}>
             {d}
           </div>
         ))}
@@ -66,15 +68,15 @@ function WeekGrid({ courses }: { courses: Course[] }) {
           ))}
         </div>
         {DAYS.map((d) => (
-          <div key={d} className={clsx('relative border-l border-zinc-100 dark:border-zinc-800', d === today && 'bg-brand-50/40 dark:bg-brand-950/20')}>
+          <div key={d} className={clsx('relative border-l border-stone-100 dark:border-stone-800', d === today && 'bg-brand-50/40 dark:bg-brand-950/20')}>
             {hours.map((h) => (
-              <div key={h} className="absolute inset-x-0 border-t border-zinc-100 dark:border-zinc-800/70" style={{ top: (h * 60 - START) * PX_PER_MIN }} />
+              <div key={h} className="absolute inset-x-0 border-t border-stone-100 dark:border-stone-800/70" style={{ top: (h * 60 - START) * PX_PER_MIN }} />
             ))}
             {blocksFor(courses, d).map(({ c, m }, i) => (
               <Link
                 key={i}
                 to={`/courses/${c.id}`}
-                className={clsx('absolute inset-x-1 overflow-hidden rounded-lg border-l-4 p-1.5 text-xs leading-tight transition hover:brightness-95', courseColor(c.color).block)}
+                className={clsx('absolute inset-x-1 overflow-hidden rounded-sm border-l-4 p-1.5 text-xs leading-tight transition hover:brightness-95', courseColor(c.color).block)}
                 style={{ top: (minutes(m.start) - START) * PX_PER_MIN, height: (minutes(m.end) - minutes(m.start)) * PX_PER_MIN }}
               >
                 <div className="font-semibold">{c.code}</div>

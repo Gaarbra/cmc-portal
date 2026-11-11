@@ -75,7 +75,7 @@ export function gpa(entries: GradeEntry[]) {
 export const cumulativeGpa = (terms: Term[]) => gpa(terms.flatMap((t) => t.grades));
 
 export function gradeTone(grade: string | null | undefined) {
-  if (!grade) return 'text-zinc-500 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400';
+  if (!grade) return 'text-stone-500 bg-stone-100 dark:bg-stone-800 dark:text-stone-400';
   if (grade.startsWith('A')) return 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950 dark:text-emerald-300';
   if (grade.startsWith('B')) return 'text-sky-700 bg-sky-50 dark:bg-sky-950 dark:text-sky-300';
   if (grade.startsWith('C')) return 'text-amber-700 bg-amber-50 dark:bg-amber-950 dark:text-amber-300';
@@ -83,12 +83,13 @@ export function gradeTone(grade: string | null | undefined) {
 }
 
 // Tailwind needs full class names at build time, so map course colors explicitly.
+// Deep, ink-like course colors. Tailwind needs full class names at build time.
 export const COURSE_COLORS: Record<string, { block: string; dot: string; text: string }> = {
-  rose: { block: 'bg-rose-100 border-rose-400 text-rose-900 dark:bg-rose-950/70 dark:text-rose-100', dot: 'bg-rose-500', text: 'text-rose-600 dark:text-rose-400' },
-  sky: { block: 'bg-sky-100 border-sky-400 text-sky-900 dark:bg-sky-950/70 dark:text-sky-100', dot: 'bg-sky-500', text: 'text-sky-600 dark:text-sky-400' },
-  amber: { block: 'bg-amber-100 border-amber-400 text-amber-900 dark:bg-amber-950/70 dark:text-amber-100', dot: 'bg-amber-500', text: 'text-amber-600 dark:text-amber-400' },
-  emerald: { block: 'bg-emerald-100 border-emerald-400 text-emerald-900 dark:bg-emerald-950/70 dark:text-emerald-100', dot: 'bg-emerald-500', text: 'text-emerald-600 dark:text-emerald-400' },
-  violet: { block: 'bg-violet-100 border-violet-400 text-violet-900 dark:bg-violet-950/70 dark:text-violet-100', dot: 'bg-violet-500', text: 'text-violet-600 dark:text-violet-400' },
-  slate: { block: 'bg-slate-100 border-slate-400 text-slate-900 dark:bg-slate-800 dark:text-slate-100', dot: 'bg-slate-500', text: 'text-slate-600 dark:text-slate-400' },
+  rose: { block: 'bg-brand-50 border-brand-700 text-brand-900 dark:bg-brand-950/60 dark:text-brand-100', dot: 'bg-brand-700', text: 'text-brand-700 dark:text-brand-300' },
+  sky: { block: 'bg-slate-100 border-slate-700 text-slate-900 dark:bg-slate-900/70 dark:text-slate-100', dot: 'bg-slate-700', text: 'text-slate-700 dark:text-slate-300' },
+  amber: { block: 'bg-gold-300/25 border-gold-600 text-gold-700 dark:bg-gold-700/20 dark:text-gold-300', dot: 'bg-gold-600', text: 'text-gold-700 dark:text-gold-400' },
+  emerald: { block: 'bg-green-50 border-green-800 text-green-900 dark:bg-green-950/60 dark:text-green-100', dot: 'bg-green-800', text: 'text-green-800 dark:text-green-400' },
+  violet: { block: 'bg-purple-50 border-purple-800 text-purple-900 dark:bg-purple-950/60 dark:text-purple-100', dot: 'bg-purple-800', text: 'text-purple-800 dark:text-purple-300' },
+  slate: { block: 'bg-stone-100 border-stone-600 text-stone-900 dark:bg-stone-800 dark:text-stone-100', dot: 'bg-stone-600', text: 'text-stone-600 dark:text-stone-400' },
 };
 export const courseColor = (c: string) => COURSE_COLORS[c] ?? COURSE_COLORS.slate;

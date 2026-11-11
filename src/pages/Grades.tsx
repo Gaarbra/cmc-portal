@@ -20,8 +20,10 @@ export default function Grades() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Academic Record"
         title="Grades"
-        subtitle="Final grades, midterm grades, and your GPA over time."
+        subtitle="Final grades, midterm grades, and your standing over time."
+        official="grades"
         action={
           <Tabs
             value={view}
@@ -63,13 +65,13 @@ function GpaTrend({ terms }: { terms: Term[] }) {
 
   return (
     <div className="card h-full p-4 sm:p-5">
-      <div className="muted text-xs font-medium uppercase tracking-wide">Term GPA trend</div>
+      <div className="eyebrow">Term GPA trend</div>
       <svg viewBox={`0 0 ${W} ${H}`} className="mt-2 h-16 w-full overflow-visible" role="img" aria-label={points.map((p) => `${p.name}: ${p.gpa.toFixed(2)}`).join(', ')}>
         <path d={path} fill="none" strokeWidth={2.5} className="stroke-brand-600 dark:stroke-brand-400" strokeLinecap="round" strokeLinejoin="round" />
         {points.map((p, i) => (
           <g key={p.name}>
-            <circle cx={x(i)} cy={y(p.gpa)} r={4} className="fill-white stroke-brand-600 dark:fill-zinc-900 dark:stroke-brand-400" strokeWidth={2} />
-            <text x={x(i)} y={y(p.gpa) - 9} textAnchor="middle" className="fill-zinc-600 text-[10px] font-semibold dark:fill-zinc-300">
+            <circle cx={x(i)} cy={y(p.gpa)} r={4} className="fill-white stroke-brand-600 dark:fill-stone-900 dark:stroke-brand-400" strokeWidth={2} />
+            <text x={x(i)} y={y(p.gpa) - 9} textAnchor="middle" className="fill-stone-600 text-[10px] font-semibold dark:fill-stone-300">
               {p.gpa.toFixed(2)}
             </text>
           </g>
@@ -111,7 +113,7 @@ function TermList({ terms }: { terms: Term[] }) {
                     <th className="px-5 py-3 text-right font-medium">Grade</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                   {t.grades.map((row) => (
                     <tr key={row.courseCode}>
                       <td className="px-5 py-3">
@@ -172,7 +174,7 @@ function WhatIf({ terms }: { terms: Term[] }) {
       }
     >
       <p className="muted mb-4 text-sm">Pick the grade you expect in each class to see where your GPA lands.</p>
-      <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <ul className="divide-y divide-stone-100 dark:divide-stone-800">
         {current.grades
           .filter((g) => g.credits > 0)
           .map((g) => (
@@ -194,14 +196,14 @@ function WhatIf({ terms }: { terms: Term[] }) {
             </li>
           ))}
       </ul>
-      <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-zinc-50 p-4 dark:bg-zinc-800/50">
+      <div className="mt-4 grid grid-cols-2 gap-3 rounded-sm bg-stone-50 p-4 dark:bg-stone-800/50">
         <div>
           <div className="muted text-xs">Projected term GPA</div>
-          <div className="text-2xl font-bold tabular-nums">{result.term.gpa?.toFixed(3)}</div>
+          <div className="numeral text-3xl font-medium">{result.term.gpa?.toFixed(3)}</div>
         </div>
         <div>
           <div className="muted text-xs">Projected cumulative</div>
-          <div className="text-2xl font-bold tabular-nums">
+          <div className="numeral text-3xl font-medium">
             {result.cum.gpa?.toFixed(3)}{' '}
             <span className={clsx('text-sm font-semibold', delta >= 0 ? 'text-emerald-600' : 'text-rose-600')}>
               {delta >= 0 ? '+' : ''}

@@ -1,72 +1,68 @@
-import { useState, type FormEvent } from 'react';
-import { Loader2, Lock } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { officialUrl } from '@/lib/links';
+import { Wordmark } from '@/components/Layout';
 
+// Until a real backend exists this page deliberately has no password field:
+// a site that isn't on a cmc.edu domain should never ask for CMC credentials
+// it can't use.
 export default function Login() {
   const { login } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError('');
+  const enter = async () => {
     setBusy(true);
-    try {
-      await login(username, password);
-    } catch (err) {
-      setError((err as Error).message);
-      setBusy(false);
-    }
+    await login('preview', '');
   };
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="relative hidden overflow-hidden bg-brand-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-500/40 blur-3xl" />
-        <div className="absolute -bottom-32 -left-16 h-96 w-96 rounded-full bg-gold-500/20 blur-3xl" />
-        <div className="relative flex items-center gap-3">
-          <img src="/icon.svg" alt="" className="h-10 w-10 rounded-xl ring-2 ring-white/20" />
-          <span className="text-lg font-semibold">CMC Portal</span>
+    <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
+      <div className="relative hidden flex-col justify-between overflow-hidden bg-brand-700 p-14 text-white lg:flex">
+        <div className="pointer-events-none absolute inset-6 border border-gold-500/40" />
+        <div className="relative">
+          <Wordmark light />
         </div>
-        <div className="relative max-w-md">
-          <h1 className="text-4xl font-bold leading-tight">Your grades, schedule and account, without the hunting.</h1>
-          <p className="mt-4 text-brand-100">Everything from the student portal, organized around what you check every day.</p>
+        <div className="relative max-w-lg">
+          <div className="mb-6 h-px w-16 bg-gold-400" />
+          <h1 className="font-serif text-5xl font-medium leading-[1.1]">Your academic life, in good order.</h1>
+          <p className="mt-5 font-serif text-xl italic leading-relaxed text-brand-100">
+            Grades, schedule, courses and your student account, gathered in one place.
+          </p>
         </div>
-        <p className="relative text-xs text-brand-200">An unofficial student-built interface.</p>
+        <div className="relative">
+          <p className="font-serif text-lg italic text-gold-300">Crescit cum commercio civitas</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-200">Claremont, California · Founded 1946</p>
+        </div>
       </div>
 
       <div className="flex items-center justify-center px-6 py-12">
-        <form onSubmit={submit} className="w-full max-w-sm">
-          <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <img src="/icon.svg" alt="" className="h-10 w-10" />
-            <span className="text-lg font-bold">CMC Portal</span>
+        <div className="w-full max-w-sm">
+          <div className="mb-10 lg:hidden">
+            <Wordmark />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight">Sign in</h2>
-          <p className="muted mt-1 text-sm">Use your CMC portal username and password.</p>
+          <div className="eyebrow">Welcome</div>
+          <h2 className="mt-1 font-serif text-4xl font-medium">Student Portal</h2>
+          <div className="rule-double mt-4" />
 
-          <label className="mt-8 block text-sm font-medium" htmlFor="u">
-            Username
-          </label>
-          <input id="u" className="input mt-1.5" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="arivera27" autoFocus />
+          <p className="mt-6 font-serif text-lg leading-relaxed text-stone-700 dark:text-stone-300">
+            This preview runs on sample records so you can explore the new design. Your real records are unaffected.
+          </p>
 
-          <label className="mt-4 block text-sm font-medium" htmlFor="p">
-            Password
-          </label>
-          <input id="p" type="password" className="input mt-1.5" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-          {error && <p className="mt-3 text-sm text-rose-600">{error}</p>}
-
-          <button className="btn-primary mt-6 w-full" disabled={busy}>
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
-            Sign in
+          <button className="btn-primary mt-8 w-full !py-3" onClick={enter} disabled={busy}>
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            Enter the preview
+            {!busy && <ArrowRight className="h-4 w-4" />}
           </button>
 
-          <div className="mt-6 rounded-xl border border-dashed border-zinc-300 p-3 text-xs text-zinc-500 dark:border-zinc-700">
-            <strong className="text-zinc-700 dark:text-zinc-300">Demo mode:</strong> the app is running on sample data. Enter any username to explore.
-          </div>
-        </form>
+          <a href={officialUrl('home')} target="_blank" rel="noopener noreferrer" className="btn-outline mt-3 w-full !py-3">
+            Go to the official portal <ExternalLink className="h-4 w-4" />
+          </a>
+
+          <p className="muted mt-10 border-t border-stone-300 pt-4 font-serif text-xs italic dark:border-stone-700">
+            An unofficial, student-built interface. Not affiliated with or endorsed by Claremont McKenna College. Never enter your CMC password on a site that isn't run by the College.
+          </p>
+        </div>
       </div>
     </div>
   );

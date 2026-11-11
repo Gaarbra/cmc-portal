@@ -1,17 +1,52 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
+import { OFFICIAL, officialUrl, type OfficialKey } from '@/lib/links';
 
-export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: ReactNode; action?: ReactNode }) {
+export function PageHeader({
+  eyebrow,
+  title,
+  subtitle,
+  action,
+  official,
+}: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: ReactNode;
+  action?: ReactNode;
+  official?: OfficialKey;
+}) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
-        {subtitle && <p className="muted mt-1 text-sm">{subtitle}</p>}
+    <div className="mb-8">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          {eyebrow && <div className="eyebrow mb-1">{eyebrow}</div>}
+          <h1 className="font-serif text-3xl font-medium leading-tight sm:text-4xl">{title}</h1>
+          {subtitle && <p className="muted mt-1 font-serif text-base italic">{subtitle}</p>}
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          {action}
+          {official && <OfficialLinkButton k={official} />}
+        </div>
       </div>
-      {action}
+      <div className="rule-double mt-4" />
     </div>
+  );
+}
+
+export function OfficialLinkButton({ k, label }: { k: OfficialKey; label?: string }) {
+  return (
+    <a
+      href={officialUrl(k)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand-700 hover:underline dark:text-brand-300"
+      title={OFFICIAL[k].description}
+    >
+      {label ?? 'Official portal'}
+      <ExternalLink className="h-3 w-3" />
+    </a>
   );
 }
 
@@ -19,8 +54,8 @@ export function Card({ title, action, children, className }: { title?: ReactNode
   return (
     <section className={clsx('card', className)}>
       {title && (
-        <header className="flex items-center justify-between gap-2 border-b border-zinc-100 px-5 py-3.5 dark:border-zinc-800">
-          <h2 className="text-sm font-semibold">{title}</h2>
+        <header className="flex items-center justify-between gap-2 border-b border-stone-200 px-5 py-3 dark:border-stone-800">
+          <h2 className="font-serif text-lg font-medium">{title}</h2>
           {action}
         </header>
       )}
@@ -31,7 +66,7 @@ export function Card({ title, action, children, className }: { title?: ReactNode
 
 export function CardLink({ to, children }: { to: string; children: ReactNode }) {
   return (
-    <Link to={to} className="inline-flex items-center text-xs font-semibold text-brand-600 hover:underline dark:text-brand-400">
+    <Link to={to} className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-700 hover:underline dark:text-brand-300">
       {children}
       <ChevronRight className="h-3.5 w-3.5" />
     </Link>
@@ -41,18 +76,18 @@ export function CardLink({ to, children }: { to: string; children: ReactNode }) 
 export function Stat({ label, value, hint, icon }: { label: string; value: ReactNode; hint?: ReactNode; icon?: ReactNode }) {
   return (
     <div className="card p-4 sm:p-5">
-      <div className="muted flex items-center gap-2 text-xs font-medium uppercase tracking-wide">
+      <div className="eyebrow flex items-center gap-2">
         {icon}
         {label}
       </div>
-      <div className="mt-2 text-2xl font-bold tabular-nums sm:text-3xl">{value}</div>
+      <div className="numeral mt-2 text-[1.65rem] font-medium leading-tight sm:text-4xl">{value}</div>
       {hint && <div className="muted mt-1 text-xs">{hint}</div>}
     </div>
   );
 }
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={clsx('animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800', className)} />;
+  return <div className={clsx('animate-pulse rounded-sm bg-stone-200 dark:bg-stone-800', className)} />;
 }
 
 export function Loading() {
@@ -78,12 +113,12 @@ export function ErrorState({ error }: { error: Error }) {
 }
 
 export function Empty({ children }: { children: ReactNode }) {
-  return <p className="muted py-6 text-center text-sm">{children}</p>;
+  return <p className="muted py-6 text-center font-serif text-base italic">{children}</p>;
 }
 
 export function Tabs<T extends string>({ value, onChange, options }: { value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
   return (
-    <div role="tablist" className="inline-flex rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
+    <div role="tablist" className="inline-flex border-b border-stone-300 dark:border-stone-700">
       {options.map((o) => (
         <button
           key={o.value}
@@ -91,8 +126,8 @@ export function Tabs<T extends string>({ value, onChange, options }: { value: T;
           aria-selected={value === o.value}
           onClick={() => onChange(o.value)}
           className={clsx(
-            'rounded-lg px-3 py-1.5 text-sm font-medium transition',
-            value === o.value ? 'bg-white shadow-sm dark:bg-zinc-950' : 'muted hover:text-zinc-900 dark:hover:text-zinc-100',
+            '-mb-px border-b-2 px-3 py-2 text-sm font-semibold transition',
+            value === o.value ? 'border-brand-600 text-brand-700 dark:border-brand-400 dark:text-brand-300' : 'muted border-transparent hover:text-stone-900 dark:hover:text-stone-100',
           )}
         >
           {o.label}

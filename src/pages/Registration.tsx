@@ -54,7 +54,7 @@ export default function Registration() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Registration" subtitle="Search Spring 2027 courses across the 5Cs and build your plan." />
+      <PageHeader eyebrow="Spring 2027" title="Registration" subtitle="Search the catalogue of the Claremont Colleges and build your plan." official="registration" />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
@@ -76,7 +76,7 @@ export default function Registration() {
                   onClick={() => setCampus(c)}
                   className={clsx(
                     'chip !px-3 !py-1 text-sm transition',
-                    campus === c ? 'bg-brand-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300',
+                    campus === c ? 'bg-brand-600 text-white' : 'bg-stone-100 text-stone-700 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-300',
                   )}
                 >
                   {c || 'All campuses'}
@@ -94,10 +94,10 @@ export default function Registration() {
                 <div key={s.id} className="card p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="text-xs font-bold uppercase tracking-wide text-brand-600 dark:text-brand-400">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-700 dark:text-brand-300">
                         {s.code}-{s.section} · {s.campus}
                       </div>
-                      <div className="font-semibold">{s.title}</div>
+                      <div className="font-serif text-xl font-medium">{s.title}</div>
                       <div className="muted mt-0.5 text-xs">
                         {s.instructor} · {s.meetings.map(meetingLabel).join(', ')}
                       </div>
@@ -113,7 +113,7 @@ export default function Registration() {
                   </div>
                   <p className="muted mt-2 text-sm">{s.description}</p>
                   <div className="mt-3 flex items-center gap-3">
-                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-stone-100 dark:bg-stone-800">
                       <div
                         className={clsx('h-full rounded-full', full ? 'bg-rose-500' : s.seats.taken / s.seats.total > 0.8 ? 'bg-amber-500' : 'bg-emerald-500')}
                         style={{ width: `${Math.min(100, (s.seats.taken / s.seats.total) * 100)}%` }}

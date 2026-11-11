@@ -16,14 +16,14 @@ export default function Profile() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Profile" />
+      <PageHeader eyebrow="Student Record" title="Profile" official="profile" />
       <div className="card flex items-center gap-4 p-6">
-        <div className="grid h-16 w-16 place-items-center rounded-full bg-brand-600 text-xl font-bold text-white">
+        <div className="grid h-16 w-16 place-items-center rounded-full bg-brand-600 font-serif text-2xl text-white">
           {student.firstName[0]}
           {student.lastName[0]}
         </div>
         <div>
-          <div className="text-xl font-bold">
+          <div className="font-serif text-2xl font-medium">
             {student.firstName} {student.lastName}
           </div>
           <div className="muted text-sm">
@@ -34,7 +34,7 @@ export default function Profile() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card title="Student information">
-          <dl className="divide-y divide-zinc-100 text-sm dark:divide-zinc-800">
+          <dl className="divide-y divide-stone-100 text-sm dark:divide-stone-800">
             {rows.map(([k, v]) => (
               <div key={k} className="flex justify-between gap-4 py-2.5 first:pt-0 last:pb-0">
                 <dt className="muted">{k}</dt>
@@ -74,7 +74,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <button onClick={logout} className="btn-ghost w-full border border-zinc-200 dark:border-zinc-800 lg:hidden">
+      <button onClick={logout} className="btn-ghost w-full border border-stone-200 dark:border-stone-800 lg:hidden">
         <LogOut className="h-4 w-4" /> Sign out
       </button>
     </div>
